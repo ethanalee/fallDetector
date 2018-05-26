@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
                 Intent i;
-                i = new Intent(this, trackedUsers.class);
+                i = new Intent(this, MapsActivity.class);
                 startActivity(i);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
