@@ -1,14 +1,11 @@
 package com.example.austin.falldetector;
 
-
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -18,7 +15,7 @@ public abstract class fallDetector implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
-
+    private DataManager dataManager = new DataManager();
     Queue<Double> magnitudes = new LinkedList<Double>();
 
     Context activity;
@@ -43,7 +40,6 @@ public abstract class fallDetector implements SensorEventListener {
         double z = event.values[2];
 
         double magnitude = Math.sqrt(x * x + y * y + z * z);
-
         if (magnitudes.size() < 15)
             magnitudes.add(magnitude);
         else
@@ -62,14 +58,11 @@ public abstract class fallDetector implements SensorEventListener {
                 magnitudes.add(magnitude);
             }
         }
-
-        Log.d("Magnitude", Double.toString(magnitude));
-        Log.d("X Acceleration", Float.toString(event.values[0]));
-        Log.d("Y Acceleration", Float.toString(event.values[1]));
     }
 
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
+        dataManager.Write();
         magnitudes.clear();
     };
     
