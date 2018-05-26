@@ -72,37 +72,7 @@ public abstract class fallDetector implements SensorEventListener {
         Log.d("Detected Fall", "A fall was detected");
         magnitudes.clear();
     };
-    /*
-    private boolean checkFall() {
-        return boolLower && boolHigher;
-    }
-
-    public void reset() {
-        boolHigher = false;
-        boolLower = false;
-    }
-
-    public void resetFall() {
-        fell = false;
-    }
-
-    private boolean checkLowerThreshold(double magnitude) {
-        if (magnitude < LOWER_THRESHOLD) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean checkHigherThreshold(double magnitude) {
-        if (magnitude > HIGHER_THRESHOLD) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    */
+    
     //not necessary, just to satisfy interface for now
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
