@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "299044086831",
+    "firebase_url": "https://fall-detector-269f8.firebaseio.com",
+    "project_id": "fall-detector-269f8",
+    "storage_bucket": "fall-detector-269f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299044086831:android:b0187eb0a0e8e6b1",
+        "android_client_info": {
+          "package_name": "com.example.austin.falldetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299044086831-cjdtpmdr19n4o1lrpj2ehj6rq968tirq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.austin.falldetector",
+            "certificate_hash": "f3b88b57d49cc093c6621d53e49f889d6ef1ed37"
+          }
+        },
+        {
+          "client_id": "299044086831-2afsv6n40pk4fao5vfe2lidrs7e7ai53.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "299044086831-2afsv6n40pk4fao5vfe2lidrs7e7ai53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsseC2SZrxs7C0taLTfcMKpVNSe1fKV0E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299044086831-2afsv6n40pk4fao5vfe2lidrs7e7ai53.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
