@@ -1,6 +1,7 @@
 package com.example.austin.falldetector;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,10 +22,11 @@ public class trackedUsers extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    DatabaseReference fallsRef;
 
     String userId;
     EditText email;
-    EditText lastFell;
+    TextView lastFell;
 
     TextView trackedUser;
     String trackedUserEmail;
@@ -71,8 +73,8 @@ public class trackedUsers extends AppCompatActivity {
         });
 
         // Read falls from database
-        myRef = database.getReference("falls");
-        myRef.addValueEventListener(new ValueEventListener() {
+        fallsRef = database.getReference("falls");
+        fallsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -81,17 +83,24 @@ public class trackedUsers extends AppCompatActivity {
                 for (DataSnapshot snapshotChild: dataSnapshot.getChildren()) {
                     String value = snapshotChild.getValue(String.class);
                     if( value != null ){
-                        String[] failRecord = value.split("/");
-                        String email = failRecord[0];
-                        Double lat = Double.parseDouble(failRecord[1]);
-                        Double longitude = Double.parseDouble(failRecord[2]);
-                        if(email == trackedUserEmail){
+                        String[] fallRecord = value.split("/");
+                        String email = fallRecord[0];
+                        Log.d("New Fall", email);
+                        Log.d("New Fall Email", trackedUserEmail);
+                        if(email.equals(trackedUserEmail)){
+                            lastFell.setText("I fell");
+                            goToMaps(fallRecord[1], fallRecord[2]);
+                            /*
                             String key = dataSnapshot.getKey();
                             String[] keyArray = key.split("-");
                             Long timeStampMillis = Long.parseLong(keyArray[1]);
+                            */
+                            /*
                             if(System.currentTimeMillis() - timeStampMillis < 3600){
+                                Log.d("Your User Fell Recently", email);
                                 lastFell.setText(timeStampMillis.toString());
                             }
+                            */
 
                         }
                         //addMarker(lat, longitude);
@@ -116,5 +125,12 @@ public class trackedUsers extends AppCompatActivity {
             }
         });
 
+    }
+    public void goToMaps(String lat, String longitude){
+        Intent mapsIntent;
+        mapsIntent = new Intent(this, MapsActivity.class);
+        mapsIntent.putExtra("latitude", lat);
+        mapsIntent.putExtra("longitude", longitude);
+        startActivity(mapsIntent);
     }
 }
