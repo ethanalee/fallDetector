@@ -24,7 +24,7 @@ public class confirmPage extends AppCompatActivity {
 
     public void getUp(){
         Intent i;
-        i = new Intent(this, MapsActivity.class);
+        i = new Intent(this, trackedUsers.class);
         startActivity(i);
     }
 }

@@ -88,7 +88,9 @@ public class trackedUsers extends AppCompatActivity {
                         String email = fallRecord[0];
                         Log.d("New Fall", email);
                         Log.d("New Fall Email", trackedUserEmail);
-                        if(email.equals(trackedUserEmail)){
+                        Double fallTime = Double.parseDouble(fallRecord[3]);
+                        //Double timeDiff = System.currentTimeMillis() - fallTime;
+                        if(email.equals(trackedUserEmail) && (System.currentTimeMillis() - fallTime < 30000 )){
                             goToMaps(fallRecord[1], fallRecord[2]);
                             /*
                             String key = dataSnapshot.getKey();
