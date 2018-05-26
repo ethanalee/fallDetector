@@ -26,6 +26,6 @@ public class DataManager {
         myRef = database.getReference("falls");
         //store in the following format
         //"userId-timestamp": "email-latitude-longitude";
-        myRef.child(userID + "-" + System.currentTimeMillis()).setValue(email + "-" + Double.toString(loc.get("latitude")) + Double.toString(loc.get("longitude")));
+        myRef.child(userID + "-" + System.currentTimeMillis()).setValue(email + "/" + Double.toString(loc.get("latitude")) + "/" + Double.toString(loc.get("longitude")));
     }
 }
