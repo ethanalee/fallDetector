@@ -1,6 +1,11 @@
 package com.example.austin.falldetector;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +21,7 @@ public class DataManager {
     public static Map<String, String> locations = new HashMap<String,String>();
     String timestampA = "";
 
-    public void  Write(String userID, HashMap<String, Double> loc){
+    public void  Write(String userID, HashMap<String, Double> loc, String email){
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -43,6 +48,7 @@ public class DataManager {
         //Log.d("MyLocation", Double.toString(loc.get("latitude")));
         myRef.child("latitude").setValue(loc.get("latitude"));
         myRef.child("longitude").setValue(loc.get("longitude"));
+        myRef.child("email").setValue(email);
 
     }
 }

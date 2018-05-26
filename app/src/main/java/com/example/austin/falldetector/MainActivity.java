@@ -1,6 +1,8 @@
 package com.example.austin.falldetector;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -32,7 +34,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
-    fallDetector detector;
 
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 1;
@@ -47,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        detector = new fallDetector(this) {};
 
         //start google sign in stuff
 
@@ -110,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
                 Log.d(TAG, "Thanks for signing in");
+
+                //save user id and user email locally so they can be used in other activities
+                SharedPreferences sharedPref = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("USER_EMAIL", account.getEmail());
+                editor.putString("USER_ID", account.getId());
+                editor.commit();
+
                 Intent i;
                 i = new Intent(this, MapsActivity.class);
                 startActivity(i);
