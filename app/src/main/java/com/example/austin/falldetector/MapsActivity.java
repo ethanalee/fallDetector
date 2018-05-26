@@ -24,7 +24,6 @@ import java.util.Set;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    fallDetector detector;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
@@ -38,7 +37,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        detector = new fallDetector(this) {};
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -70,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void addMarker(Double latitude, Double longitude){
         LatLng loc = new LatLng(latitude, longitude);
         if(loc != null){
-            mMap.addMarker(new MarkerOptions().position(loc).title("Marker in Sydney"));
+            mMap.addMarker(new MarkerOptions().position(loc).title("Your Friend's Fall Location"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));
         }
     }
