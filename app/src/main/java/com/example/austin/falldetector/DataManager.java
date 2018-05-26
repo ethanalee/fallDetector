@@ -7,9 +7,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DataManager {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("testFall");
+    DatabaseReference myRef;
 
     public void DataManager(){
         myRef.addValueEventListener(new ValueEventListener() {
@@ -27,9 +30,8 @@ public class DataManager {
         });
     }
 
-    public void  Write(){
-        myRef.setValue("Sensor Changed!");
+    public void  Write(String userID){
+        myRef = database.getReference(userID + "-" + System.currentTimeMillis());
+        myRef.setValue("Kanata");
     }
-
-
 }
