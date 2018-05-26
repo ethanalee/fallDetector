@@ -7,6 +7,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public abstract class fallDetector implements SensorEventListener {
     private final double LOWER_THRESHOLD = 6;
@@ -14,6 +18,8 @@ public abstract class fallDetector implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
+
+    Queue<Double> magnitudes = new LinkedList<Double>();
 
     Context activity;
 
@@ -38,12 +44,35 @@ public abstract class fallDetector implements SensorEventListener {
 
         double magnitude = Math.sqrt(x * x + y * y + z * z);
 
+        if (magnitudes.size() < 10)
+            magnitudes.add(magnitude);
+        else
+        {
+            double magnitudeAverage = 0;
+            for(Double magn : magnitudes){
+                magnitudeAverage += magn;
+            }
+            magnitudeAverage = magnitudeAverage/10;
+
+            if(magnitude/magnitudeAverage > 3){
+                onFall();
+            }
+            else{
+                magnitudes.remove();
+                magnitudes.add(magnitude);
+            }
+        }
+
         Log.d("Magnitude", Double.toString(magnitude));
+        Log.d("X Acceleration", Float.toString(event.values[0]));
+        Log.d("Y Acceleration", Float.toString(event.values[1]));
     }
 
+    public void onFall(){
+        Log.d("Detected Fall", "A fall was detected");
+        magnitudes.clear();
+    };
     /*
-    public abstract void onFall();
-
     private boolean checkFall() {
         return boolLower && boolHigher;
     }
