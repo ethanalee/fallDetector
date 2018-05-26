@@ -14,7 +14,8 @@ public class trackedUsers extends AppCompatActivity {
         setContentView(R.layout.activity_tracked_users);
 
         SharedPreferences sharedPref = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String email = sharedPref.getString("USER_EMAIL", "");
-        dataManager.registerUser(email, "fakeRecord");
+        String userId = sharedPref.getString("USER_ID", "");
+        dataManager.registerUser(userId, "fakeRecord");
+
     }
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 public class DataManager {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    DatabaseReference userRef;
     public static Map<String, String> locations = new HashMap<String,String>();
     String timestampA = "";
 
@@ -27,5 +28,10 @@ public class DataManager {
         //store in the following format
         //"userId-timestamp": "email-latitude-longitude";
         myRef.child(userID + "-" + System.currentTimeMillis()).setValue(email + "/" + Double.toString(loc.get("latitude")) + "/" + Double.toString(loc.get("longitude")));
+    }
+
+    public void registerUser(String userId, String record){
+        userRef = database.getReference(userId);
+        userRef.setValue(record);
     }
 }
