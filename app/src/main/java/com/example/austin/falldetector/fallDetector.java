@@ -62,7 +62,7 @@ public abstract class fallDetector implements SensorEventListener {
 
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
-        dataManager.Write();
+        dataManager.Write("saf;lkfdj;as");
         magnitudes.clear();
     };
     
