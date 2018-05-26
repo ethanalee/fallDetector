@@ -12,26 +12,34 @@ import java.util.Map;
 
 public class DataManager {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef;
+    DatabaseReference myRef = database.getReference("start");
+    public static Map<String, String> locations = new HashMap<String,String>();
+    String timestampA = "";
 
-    public void DataManager(){
+    public void  Write(String userID){
+        // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                Log.d("FireBase Value", "Value is: " + value);
+                if(value != null){
+                    locations.put(Long.toString(System.currentTimeMillis()), value);
+                    timestampA = Long.toString(System.currentTimeMillis());
+                }
             }
 
+            @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Log.w("FireBase Reading Error", "Failed to read value.");
+                Log.w("FireBaseError", "Failed to read value.", error.toException());
             }
         });
-    }
 
-    public void  Write(String userID){
         myRef = database.getReference(userID + "-" + System.currentTimeMillis());
+        if(locations.get(timestampA)!=null)
+            Log.w("FireBaseMap", locations.get(timestampA));
         myRef.setValue("Kanata");
     }
 }
