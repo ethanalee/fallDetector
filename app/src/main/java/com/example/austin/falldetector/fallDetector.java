@@ -44,7 +44,7 @@ public abstract class fallDetector implements SensorEventListener {
 
         double magnitude = Math.sqrt(x * x + y * y + z * z);
 
-        if (magnitudes.size() < 10)
+        if (magnitudes.size() < 15)
             magnitudes.add(magnitude);
         else
         {
@@ -52,7 +52,7 @@ public abstract class fallDetector implements SensorEventListener {
             for(Double magn : magnitudes){
                 magnitudeAverage += magn;
             }
-            magnitudeAverage = magnitudeAverage/10;
+            magnitudeAverage = magnitudeAverage/magnitudes.size();
 
             if(magnitude/magnitudeAverage > 3){
                 onFall();
