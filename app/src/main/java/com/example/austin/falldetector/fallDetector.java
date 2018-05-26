@@ -1,6 +1,7 @@
 package com.example.austin.falldetector;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -83,7 +84,6 @@ public abstract class fallDetector implements SensorEventListener {
                     loc.put("longitude", location.getLongitude());
                     Log.d("Got Location", Double.toString(loc.get("latitude")));
 
-                    //NOTE THIS MAY BE CAUSING SOME CRASHES INVESTIGATE LATER
                     SharedPreferences sharedPref = activity.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     String email = sharedPref.getString("USER_EMAIL", "");
                     String userID = sharedPref.getString("USER_ID", "");
@@ -101,6 +101,9 @@ public abstract class fallDetector implements SensorEventListener {
         Log.d("Detected Fall", "A fall was detected");
         getLastLocation();
         magnitudes.clear();
+        Intent i;
+        i = new Intent(activity, confirmPage.class);
+        activity.startActivity(i);
     };
     
     //not necessary, just to satisfy interface for now
