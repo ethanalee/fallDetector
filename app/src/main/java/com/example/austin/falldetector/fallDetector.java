@@ -5,7 +5,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.hardware.SensorEventListener;
+import android.location.Location;
 import android.util.Log;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,13 +22,17 @@ public abstract class fallDetector implements SensorEventListener {
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private DataManager dataManager = new DataManager();
+    public DataManager dataManager = new DataManager();
     Queue<Double> magnitudes = new LinkedList<Double>();
+
+    public FusedLocationProviderClient mFusedLocationClient;
 
     Context activity;
 
     public fallDetector(Context activity) {
         this.activity = activity;
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
 
         sensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -50,7 +61,7 @@ public abstract class fallDetector implements SensorEventListener {
             }
             magnitudeAverage = magnitudeAverage/magnitudes.size();
 
-            if(magnitude/magnitudeAverage > 3){
+            if(magnitude/magnitudeAverage > 2){
                 onFall();
             }
             else{
@@ -60,9 +71,29 @@ public abstract class fallDetector implements SensorEventListener {
         }
     }
 
+    private void getLastLocation() {
+        Log.d("Fetch", "Loc");
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    HashMap<String, Double> loc = new HashMap<String, Double>();
+                    loc.put("latitude", location.getLatitude());
+                    loc.put("longitude", location.getLongitude());
+                    Log.d("Got Location", Double.toString(loc.get("latitude")));
+                    dataManager.Write("fakeUserId", loc);
+                } else {
+                    Log.d("Got Nothing", "Lol");
+                    return;
+                    // Do not send error on events otherwise it will produce an error
+                }
+            }
+        });
+    }
+
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
-        dataManager.Write("saf;lkfdj;as");
+        getLastLocation();
         magnitudes.clear();
     };
     
