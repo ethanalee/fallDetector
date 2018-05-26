@@ -16,7 +16,7 @@ public class DataManager {
     public static Map<String, String> locations = new HashMap<String,String>();
     String timestampA = "";
 
-    public void  Write(String userID){
+    public void  Write(String userID, HashMap<String, Double> loc){
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -40,6 +40,9 @@ public class DataManager {
         myRef = database.getReference(userID + "-" + System.currentTimeMillis());
         if(locations.get(timestampA)!=null)
             Log.w("FireBaseMap", locations.get(timestampA));
-        myRef.setValue("Kanata");
+        //Log.d("MyLocation", Double.toString(loc.get("latitude")));
+        myRef.child("latitude").setValue(loc.get("latitude"));
+        myRef.child("longitude").setValue(loc.get("longitude"));
+
     }
 }

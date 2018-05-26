@@ -61,7 +61,7 @@ public abstract class fallDetector implements SensorEventListener {
             }
             magnitudeAverage = magnitudeAverage/magnitudes.size();
 
-            if(magnitude/magnitudeAverage > 3){
+            if(magnitude/magnitudeAverage > 2){
                 onFall();
             }
             else{
@@ -81,6 +81,7 @@ public abstract class fallDetector implements SensorEventListener {
                     loc.put("latitude", location.getLatitude());
                     loc.put("longitude", location.getLongitude());
                     Log.d("Got Location", Double.toString(loc.get("latitude")));
+                    dataManager.Write("fakeUserId", loc);
                 } else {
                     Log.d("Got Nothing", "Lol");
                     return;
@@ -92,9 +93,8 @@ public abstract class fallDetector implements SensorEventListener {
 
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
-        dataManager.Write("fakeUserId");
-        magnitudes.clear();
         getLastLocation();
+        magnitudes.clear();
     };
     
     //not necessary, just to satisfy interface for now
