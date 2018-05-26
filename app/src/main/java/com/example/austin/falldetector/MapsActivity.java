@@ -50,10 +50,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
+                Boolean lol = true;
+
                 for (DataSnapshot snapshotChild: dataSnapshot.getChildren()) {
                     String value = snapshotChild.getValue(String.class);
                     if( value != null ){
-                        Log.d("Get Data", value);
+                        String[] failRecord = value.split("/");
+                        Log.d("Get Email", failRecord[0]);
+                        Double lat = Double.parseDouble(failRecord[1]);
+                        Double longitude = Double.parseDouble(failRecord[2]);
+                        addMarker(lat, longitude);
                     }
                 }
                 Log.d("Firebase Updated", "yay");
@@ -89,10 +95,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
+    public void addMarker(Double latitude, Double longitude){
+        LatLng loc = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(loc).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));
+    }
+
 }
