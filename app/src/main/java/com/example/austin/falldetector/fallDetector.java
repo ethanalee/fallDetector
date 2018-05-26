@@ -19,15 +19,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class fallDetector implements SensorEventListener {
-    private final double LOWER_THRESHOLD = 6;
-    private final double HIGHER_THRESHOLD = 15;
-
     private SensorManager sensorManager;
     private Sensor accelerometer;
     public DataManager dataManager = new DataManager();
     Queue<Double> magnitudes = new LinkedList<Double>();
 
     public FusedLocationProviderClient mFusedLocationClient;
+
+    public double lastFallMillis;
 
     Context activity;
 
@@ -87,6 +86,7 @@ public abstract class fallDetector implements SensorEventListener {
                     SharedPreferences sharedPref = activity.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     String email = sharedPref.getString("USER_EMAIL", "");
                     String userID = sharedPref.getString("USER_ID", "");
+                    lastFallMillis = System.currentTimeMillis();
                     dataManager.Write(userID, loc, email);
                 } else {
                     Log.d("Got Nothing", "Lol");
@@ -99,11 +99,13 @@ public abstract class fallDetector implements SensorEventListener {
 
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
-        getLastLocation();
-        magnitudes.clear();
-        Intent i;
-        i = new Intent(activity, confirmPage.class);
-        activity.startActivity(i);
+        if(System.currentTimeMillis() - lastFallMillis > 3600){
+            getLastLocation();
+            magnitudes.clear();
+            Intent i;
+            i = new Intent(activity, confirmPage.class);
+            activity.startActivity(i);
+        }
     };
     
     //not necessary, just to satisfy interface for now

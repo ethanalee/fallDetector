@@ -11,17 +11,31 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:background="#3F51B5"
-            android:text="@string/register_form_text"/>
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:text="My Tracked Users"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Sample email"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/tracked_user"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:layout_marginTop="20dp"
+            android:text="Track A New User"/>
 
         <EditText
-            android:id="@+id/firstname_edittext"
+            android:id="@+id/email_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+<<<<<<< HEAD
             android:hint="Firstname"/>
 
         <EditText
@@ -80,6 +94,9 @@
             </RadioGroup>
 
         </LinearLayout>
+=======
+            android:hint="Email"/>
+>>>>>>> 21a509f39eac5de5bfb2ec7b8644b88e1a197936
 
         <Button
             android:id="@+id/register_button"
@@ -89,7 +106,7 @@
             android:paddingBottom="10dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/register"/>
+            android:text="@string/register" />
 
     </LinearLayout>
 

@@ -24,10 +24,12 @@ import java.util.Set;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    fallDetector detector;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+
+    Double latitude;
+    Double longitudeDbl;
 
     //public static Map<String, String> locations = new HashMap<String,String>();
     //String timestampA = "";
@@ -35,51 +37,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        detector = new fallDetector(this) {};
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Read from the database
-        myRef = database.getReference("falls");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-
-                Boolean lol = true;
-
-                for (DataSnapshot snapshotChild: dataSnapshot.getChildren()) {
-                    String value = snapshotChild.getValue(String.class);
-                    if( value != null ){
-                        String[] failRecord = value.split("/");
-                        Log.d("Get Email", failRecord[0]);
-                        Double lat = Double.parseDouble(failRecord[1]);
-                        Double longitude = Double.parseDouble(failRecord[2]);
-                        addMarker(lat, longitude);
-                    }
-                }
-                Log.d("Firebase Updated", "yay");
-
-                /*
-                String value = dataSnapshot.getValue(String.class);
-                if(value != null){
-                    Log.d("Firebase Updated", value);
-                    //locations.put(Long.toString(System.currentTimeMillis()), value);
-                    //timestampA = Long.toString(System.currentTimeMillis());
-                }
-                */
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("FireBaseError", "Failed to read value.", error.toException());
-            }
-        });
+        String lat = getIntent().getStringExtra("latitude");
+        String longitude = getIntent().getStringExtra("longitude");
+        latitude = Double.parseDouble(lat);
+        longitudeDbl = Double.parseDouble(longitude);
     }
 
 
@@ -95,12 +62,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        addMarker(latitude, longitudeDbl);
     }
 
     public void addMarker(Double latitude, Double longitude){
         LatLng loc = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(loc).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));
+        if(loc != null){
+            mMap.addMarker(new MarkerOptions().position(loc).title("Your Friend's Fall Location"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 18));
+        }
     }
 
 }
