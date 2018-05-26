@@ -1,6 +1,11 @@
 package com.example.austin.falldetector;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,37 +17,15 @@ import java.util.Map;
 
 public class DataManager {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("start");
+    DatabaseReference myRef;
     public static Map<String, String> locations = new HashMap<String,String>();
     String timestampA = "";
 
-    public void  Write(String userID, HashMap<String, Double> loc){
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                if(value != null){
-                    locations.put(Long.toString(System.currentTimeMillis()), value);
-                    timestampA = Long.toString(System.currentTimeMillis());
-                }
-            }
+    public void  Write(String userID, HashMap<String, Double> loc, String email){
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("FireBaseError", "Failed to read value.", error.toException());
-            }
-        });
-
-        myRef = database.getReference(userID + "-" + System.currentTimeMillis());
-        if(locations.get(timestampA)!=null)
-            Log.w("FireBaseMap", locations.get(timestampA));
-        //Log.d("MyLocation", Double.toString(loc.get("latitude")));
-        myRef.child("latitude").setValue(loc.get("latitude"));
-        myRef.child("longitude").setValue(loc.get("longitude"));
-
+        myRef = database.getReference("falls");
+        //store in the following format
+        //"userId-timestamp": "email-latitude-longitude";
+        myRef.child(userID + "-" + System.currentTimeMillis()).setValue(email + "/" + Double.toString(loc.get("latitude")) + "/" + Double.toString(loc.get("longitude")));
     }
 }
