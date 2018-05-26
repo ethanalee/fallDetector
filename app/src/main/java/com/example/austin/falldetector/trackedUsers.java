@@ -24,9 +24,10 @@ public class trackedUsers extends AppCompatActivity {
     DatabaseReference myRef;
     DatabaseReference fallsRef;
 
+    fallDetector detector;
+
     String userId;
     EditText email;
-    TextView lastFell;
 
     TextView trackedUser;
     String trackedUserEmail;
@@ -35,13 +36,13 @@ public class trackedUsers extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracked_users);
+        detector = new fallDetector(this) {};
 
         SharedPreferences sharedPref = this.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId = sharedPref.getString("USER_ID", "");
 
         Button register_button = findViewById(R.id.register_button);
         email = (EditText) findViewById(R.id.email_edittext);
-        lastFell = (TextView) findViewById(R.id.last_fell);
         trackedUser = (TextView)findViewById(R.id.tracked_user);
 
         register_button.setOnClickListener(new View.OnClickListener(){
@@ -88,20 +89,16 @@ public class trackedUsers extends AppCompatActivity {
                         Log.d("New Fall", email);
                         Log.d("New Fall Email", trackedUserEmail);
                         if(email.equals(trackedUserEmail)){
-                            lastFell.setText("I fell");
                             goToMaps(fallRecord[1], fallRecord[2]);
                             /*
                             String key = dataSnapshot.getKey();
                             String[] keyArray = key.split("-");
                             Long timeStampMillis = Long.parseLong(keyArray[1]);
-                            */
-                            /*
                             if(System.currentTimeMillis() - timeStampMillis < 3600){
                                 Log.d("Your User Fell Recently", email);
-                                lastFell.setText(timeStampMillis.toString());
+                                goToMaps(fallRecord[1], fallRecord[2]);
                             }
                             */
-
                         }
                         //addMarker(lat, longitude);
                     }
