@@ -86,8 +86,10 @@ public abstract class fallDetector implements SensorEventListener {
                     SharedPreferences sharedPref = activity.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     String email = sharedPref.getString("USER_EMAIL", "");
                     String userID = sharedPref.getString("USER_ID", "");
-                    lastFallMillis = System.currentTimeMillis();
-                    dataManager.Write(userID, loc, email);
+                    if(System.currentTimeMillis() - lastFallMillis > 60000){
+                        lastFallMillis = System.currentTimeMillis();
+                        dataManager.Write(userID, loc, email);
+                    }
                 } else {
                     Log.d("Got Nothing", "Lol");
                     return;
@@ -99,13 +101,11 @@ public abstract class fallDetector implements SensorEventListener {
 
     public void onFall(){
         Log.d("Detected Fall", "A fall was detected");
-        if(System.currentTimeMillis() - lastFallMillis > 3600){
-            getLastLocation();
-            magnitudes.clear();
-            Intent i;
-            i = new Intent(activity, confirmPage.class);
-            activity.startActivity(i);
-        }
+        getLastLocation();
+        magnitudes.clear();
+        Intent i;
+        i = new Intent(activity, confirmPage.class);
+        activity.startActivity(i);
     };
     
     //not necessary, just to satisfy interface for now
