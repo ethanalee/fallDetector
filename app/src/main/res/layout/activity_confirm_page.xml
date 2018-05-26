@@ -31,7 +31,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/signInButton"
+        android:id="@+id/getUpButton"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:backgroundTint="#FFE400"
