@@ -22,7 +22,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="@string/firstname"/>
+            android:hint="Firstname"/>
+
+        <EditText
+            android:id="@+id/lastname_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Lastname"/>
+
+        <EditText
+            android:id="@+id/email_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:inputType="textEmailAddress"
+            android:hint="email"/>
+
+        <EditText
+            android:id="@+id/birthday_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:layout_marginTop="20dp"
+            android:hint="Birthday"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"/>
+
+            <RadioGroup
+                android:id="@+id/gender_radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"/>
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/register_button"
@@ -37,4 +94,3 @@
     </LinearLayout>
 
 </ScrollView>
-

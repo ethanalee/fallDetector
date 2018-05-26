@@ -9,23 +9,93 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.328"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.321" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="383dp"
+        android:layout_height="511dp"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="89dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Login"
+        android:textSize="35dp"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="129dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview"
+        android:layout_centerHorizontal="true"
+        android:text="Fall Finder"
+        android:textColor="#000080"
+        android:textSize="35dp"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="47dp" />
+
+    <TextView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = ""
+        android:id = "@+id/textView"
+        android:layout_below = "@+id/textview"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "#ff7aff24"
+        android:textSize = "35dp" />
+
 
     <Button
         android:id="@+id/signInButton"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="80dp"
         android:layout_marginLeft="40dp"
         android:backgroundTint="#FFE400"
         android:text="Sign In"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="158dp"
+        android:layout_height="173dp"
+        app:srcCompat="@drawable/slipp"
+        tools:layout_editor_absoluteX="113dp"
+        tools:layout_editor_absoluteY="177dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="142dp"
+        android:layout_height="230dp"
+        app:srcCompat="@drawable/slip"
+        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteY="150dp" />
+
 
 </android.support.constraint.ConstraintLayout>
